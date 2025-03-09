@@ -13,7 +13,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/login/', { identifier, password });
+      const response = await axios.post('https://se-project-beta-backend.onrender.com/api/login/', { identifier, password });
       
       // Get token and user info
       const { token, role } = response.data;

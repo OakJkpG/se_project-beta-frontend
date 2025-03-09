@@ -21,7 +21,7 @@ const AccountPublisher = () => {
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:8000/api/account/publisher/', {
+      .get('https://se-project-beta-backend.onrender.com/api/account/publisher/', {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       })
       .then(response => setAccountData(response.data))
@@ -31,7 +31,7 @@ const AccountPublisher = () => {
 
   const handleRemoveBook = (bookId) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/books/remove/${bookId}/`, {
+      .delete(`https://se-project-beta-backend.onrender.com/api/books/remove/${bookId}/`, {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       })
       // eslint-disable-next-line no-unused-vars
@@ -59,7 +59,7 @@ const AccountPublisher = () => {
     if (newBook.cover_image) formData.append('cover_image', newBook.cover_image);
     if (newBook.pdf_file) formData.append('pdf_file', newBook.pdf_file);
     axios
-      .post('http://127.0.0.1:8000/api/books/add/', formData, {
+      .post('https://se-project-beta-backend.onrender.com/api/books/add/', formData, {
         headers: {
           Authorization: `Token ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data',

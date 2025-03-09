@@ -19,7 +19,7 @@ const AccountReader = () => {
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:8000/api/account/reader/', {
+      .get('https://se-project-beta-backend.onrender.com/api/account/reader/', {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       })
       .then(response => setAccountData(response.data))
@@ -29,7 +29,7 @@ const AccountReader = () => {
 
   const handleReturn = (borrowId) => {
     axios
-      .post(`http://127.0.0.1:8000/api/books/return/${borrowId}/`, {}, {
+      .post(`https://se-project-beta-backend.onrender.com/api/books/return/${borrowId}/`, {}, {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       })
       // eslint-disable-next-line no-unused-vars

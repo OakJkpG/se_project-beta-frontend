@@ -19,7 +19,7 @@ const MainPage = () => {
       return;
     }
 
-    axios.get('http://127.0.0.1:8000/api/books/', {
+    axios.get('https://se-project-beta-backend.onrender.com/api/books/', {
       headers: { Authorization: `Token ${token}` },
     })
     .then(response => setBooks(response.data))
