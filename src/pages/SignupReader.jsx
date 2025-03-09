@@ -1,6 +1,7 @@
 // src/pages/SignupReader.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // ใช้ useNavigate สำหรับรีไดเร็กต์
 import './Auth.css';
 
 const SignupReader = () => {
@@ -12,6 +13,8 @@ const SignupReader = () => {
   const [verificationCode, setVerificationCode] = useState('');
   const [error, setError] = useState(null);
   const [message, setMessage] = useState('');
+  
+  const navigate = useNavigate();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -20,24 +23,31 @@ const SignupReader = () => {
       return;
     }
     try {
-      await axios.post('https://se-project-beta-backend.onrender.com/api/signup/reader/', { name, email, password });
+      await axios.post('http://127.0.0.1:8000/api/signup/reader/', { 
+        username: name,  // ส่ง username แทน name
+        email, 
+        password 
+      });
       setStep(2);
       setMessage('Verification code sent to your email. Please check your inbox.');
-    // eslint-disable-next-line no-unused-vars
     } catch (err) {
-      setError('Signup failed. Please try again.');
+      console.error("Error Response:", err.response?.data);
+      setError(err.response?.data?.error || "Signup failed.");
     }
   };
+  
+  
 
   const handleVerificationSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://se-project-beta-backend.onrender.com/api/signup/reader/verify/', { email, verification_code: verificationCode });
+      await axios.post('http://127.0.0.1:8000/api/signup/reader/verify/', { email, verification_code: verificationCode });
       setMessage('Your account has been verified and registered as a Reader.');
-      // Optionally redirect to login
-    // eslint-disable-next-line no-unused-vars
+      // รีไดเร็กต์ไปยังหน้า login หลังการยืนยันสำเร็จ
+      navigate('/login');
     } catch (err) {
-      setError('Verification failed. Please check the code and try again.');
+      console.error("Error Response:", err.response.data);
+      setError(err.response?.data?.non_field_errors?.[0] || "Verification failed.");
     }
   };
 
@@ -50,39 +60,19 @@ const SignupReader = () => {
         <form onSubmit={handleFormSubmit}>
           <div>
             <label>Name:</label>
-            <input 
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required 
-            />
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
           </div>
           <div>
             <label>Email:</label>
-            <input 
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required 
-            />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div>
             <label>Password:</label>
-            <input 
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required 
-            />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
           <div>
             <label>Confirm Password:</label>
-            <input 
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required 
-            />
+            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
           </div>
           <button type="submit">Signup</button>
         </form>
@@ -92,12 +82,7 @@ const SignupReader = () => {
         <form onSubmit={handleVerificationSubmit}>
           <div>
             <label>Verification Code:</label>
-            <input 
-              type="text"
-              value={verificationCode}
-              onChange={(e) => setVerificationCode(e.target.value)}
-              required 
-            />
+            <input type="text" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} required />
           </div>
           <button type="submit">Verify</button>
         </form>

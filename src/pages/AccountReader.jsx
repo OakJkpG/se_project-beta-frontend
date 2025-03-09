@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 // src/pages/AccountReader.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -10,9 +9,17 @@ const AccountReader = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  // ตรวจสอบ role ก่อนแสดงหน้า account
+  useEffect(() => {
+    const role = localStorage.getItem('role');
+    if (role !== 'reader') {
+      navigate('/login'); // หากไม่ใช่ reader ให้ redirect ไปที่หน้า login
+    }
+  }, [navigate]);
+
   useEffect(() => {
     axios
-      .get('https://se-project-beta-backend.onrender.com/api/account/reader/', {
+      .get('http://127.0.0.1:8000/api/account/reader/', {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       })
       .then(response => setAccountData(response.data))
@@ -22,7 +29,7 @@ const AccountReader = () => {
 
   const handleReturn = (borrowId) => {
     axios
-      .post(`https://se-project-beta-backend.onrender.com/api/books/return/${borrowId}/`, {}, {
+      .post(`http://127.0.0.1:8000/api/books/return/${borrowId}/`, {}, {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       })
       // eslint-disable-next-line no-unused-vars
@@ -62,19 +69,11 @@ const AccountReader = () => {
             <div className="book-info">
               <h4>{borrow.book.title}</h4>
               <p>Due: {new Date(borrow.due_date).toLocaleDateString()}</p>
+              <button onClick={() => navigate(`/read/${borrow.id}`)}>Read Book</button>
               <button onClick={() => handleReturn(borrow.id)}>Return</button>
             </div>
           </div>
         ))}
-      </div>
-      <div className="book-item" key={borrowed.id}>
-        <img src={borrow.book.cover_image} alt={borrow.book.title} />
-        <div className="book-info">
-            <h4>{borrow.book.title}</h4>
-            <p>Due: {new Date(borrow.due_date).toLocaleDateString()}</p>
-            <button onClick={() => navigate(`/read/${borrow.id}`)}>Read Book</button>
-            <button onClick={() => handleReturn(borrow.id)}>Return</button>
-        </div>
       </div>
     </div>
   );

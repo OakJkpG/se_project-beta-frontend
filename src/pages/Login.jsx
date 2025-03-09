@@ -1,25 +1,39 @@
-// src/pages/Login.jsx
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Auth.css';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://se-project-beta-backend.onrender.com/api/login/', { email, password });
-      // เก็บ token ใน localStorage หรือ context ตามความต้องการ
-      localStorage.setItem('token', response.data.token);
-      console.log(response.data);
-      // Redirect ไปยังหน้าอื่นหลัง login สำเร็จ
-    // eslint-disable-next-line no-unused-vars
+      const response = await axios.post('http://127.0.0.1:8000/api/login/', { identifier, password });
+      
+      // Get token and user info
+      const { token, role } = response.data;
+      const userId = response.data.userId || '1'; // Get userId from response or use default
+      
+      // Store in localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
+      localStorage.setItem('userId', userId);
+      
+      // Navigate based on role
+      if (role === 'reader') {
+        navigate(`/account/reader/${userId}`);
+      } else if (role === 'publisher') {
+        navigate(`/account/publisher/${userId}`);
+      } else {
+        navigate('/main');
+      }
     } catch (err) {
-      setError('Login failed. Please check your credentials.');
+      setError(err.response?.data?.detail || 'Login failed. Please check your credentials.');
     }
   };
 
@@ -29,11 +43,11 @@ const Login = () => {
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email:</label>
+          <label>Email or Username:</label>
           <input 
-            type="email" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text" 
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
             required 
           />
         </div>

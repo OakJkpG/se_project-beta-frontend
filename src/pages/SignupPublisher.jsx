@@ -1,6 +1,7 @@
 // src/pages/SignupPublisher.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // ใช้ useNavigate สำหรับรีไดเร็กต์
 import './Auth.css';
 
 const SignupPublisher = () => {
@@ -12,6 +13,8 @@ const SignupPublisher = () => {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState('');
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -19,10 +22,12 @@ const SignupPublisher = () => {
       return;
     }
     try {
-      await axios.post('https://se-project-beta-backend.onrender.com/api/signup/publisher/', { name, email, password, id_card: idCard });
+      await axios.post('http://127.0.0.1:8000/api/signup/publisher/', { name, email, password, id_card: idCard });
       setMessage('Registration submitted for admin verification. Please wait for confirmation.');
-    // eslint-disable-next-line no-unused-vars
+      // รีไดเร็กต์ไปยังหน้า login หลังการสมัครสำเร็จ
+      navigate('/login');
     } catch (err) {
+      console.error(err);
       setError('Signup failed. Please try again.');
     }
   };
@@ -34,48 +39,23 @@ const SignupPublisher = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
-          <input 
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required 
-          />
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
         </div>
         <div>
           <label>Email:</label>
-          <input 
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required 
-          />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
         <div>
           <label>Password:</label>
-          <input 
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required 
-          />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
         <div>
           <label>Confirm Password:</label>
-          <input 
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required 
-          />
+          <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
         </div>
         <div>
           <label>ID Card:</label>
-          <input 
-            type="text"
-            value={idCard}
-            onChange={(e) => setIdCard(e.target.value)}
-            required 
-          />
+          <input type="text" value={idCard} onChange={(e) => setIdCard(e.target.value)} required />
         </div>
         <button type="submit">Signup</button>
       </form>

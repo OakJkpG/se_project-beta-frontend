@@ -9,7 +9,7 @@ const BookDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('https://se-project-beta-backend.onrender.com/api/books/${bookId}/', {
+    axios.get('http://127.0.0.1:8000/api/books/${bookId}/', {
       headers: { Authorization: `Token ${localStorage.getItem('token')}` },
     })
     .then(response => setBook(response.data))
