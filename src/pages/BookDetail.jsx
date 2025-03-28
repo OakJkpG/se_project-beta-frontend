@@ -20,7 +20,7 @@ const BookDetail = () => {
 
   const fetchBookDetails = () => {
     axios
-      .get(`http://127.0.0.1:8000/api/books/${bookId}/`, {
+      .get(`https://se-project-beta-backend.onrender.com/api/books/${bookId}/`, {
         headers: { Authorization: `Token ${token}` },
       })
       .then((response) => {
@@ -50,7 +50,7 @@ const BookDetail = () => {
     
     axios
       .post(
-        `http://127.0.0.1:8000/api/books/borrow/`,
+        `https://se-project-beta-backend.onrender.com/api/books/borrow/`,
         { book_id: book.id },
         { headers: { Authorization: `Token ${token}` } }
       )
@@ -87,7 +87,7 @@ const BookDetail = () => {
 
   const handleRemoveBook = () => {
     axios
-      .delete(`http://127.0.0.1:8000/api/books/remove/${bookId}/`, {
+      .delete(`https://se-project-beta-backend.onrender.com/api/books/remove/${bookId}/`, {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       })
       .then(() => {
