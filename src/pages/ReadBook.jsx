@@ -13,7 +13,7 @@ const ReadBook = ({ borrowId }) => {
 
   useEffect(() => {
     axios
-      .get(`https://se-project-beta-backend.onrender.com/api/books/read/${borrowId}/`, {
+      .get(`http://127.0.0.1:8000/api/books/read/${borrowId}/`, {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
         responseType: 'arraybuffer', // รับข้อมูลเป็น ArrayBuffer
       })
