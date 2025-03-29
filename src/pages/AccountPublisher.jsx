@@ -201,10 +201,15 @@ const AccountPublisher = () => {
         <p>Role: {accountData.user.role}</p>
         <p>Registered: {new Date(accountData.user.registered_at).toLocaleDateString()}</p>
         <p>Published Books: {accountData.user.book_count}</p>
-        <button onClick={() => {
-          localStorage.removeItem('token');
-          window.location.href = '/';
-        }}>Logout</button>
+        <button
+          onClick={() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            navigate('/'); // ใช้ useNavigate เพื่อเปลี่ยนเส้นทางไปที่หน้าแรก
+          }}
+        >
+          Logout
+        </button>
       </div>
 
       <div className="account-right">

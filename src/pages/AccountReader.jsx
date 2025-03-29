@@ -173,11 +173,16 @@ const AccountReader = () => {
         <p>Role: {accountData.user.role}</p>
         <p>Registered: {new Date(accountData.user.registered_at).toLocaleDateString()}</p>
         <p>Borrowed Books: {accountData.user.borrow_count}</p>
-        <button className="logout-button" onClick={() => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('role');
-          window.location.href = '/';
-        }}>Logout</button>
+        <button
+          className="logout-button"
+          onClick={() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            navigate('/'); // ใช้ useNavigate เพื่อเปลี่ยนเส้นทางไปที่หน้าแรก
+          }}
+        >
+          Logout
+        </button>
       </div>
       
       <div className="account-right">
