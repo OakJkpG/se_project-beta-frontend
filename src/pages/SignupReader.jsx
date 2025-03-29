@@ -23,7 +23,7 @@ const SignupReader = () => {
       return;
     }
     try {
-      await axios.post('http://127.0.0.1:8000/api/signup/reader/', { 
+      await axios.post('https://se-project-beta-backend.onrender.com/api/signup/reader/', { 
         username: name,  // ส่ง username แทน name
         email, 
         password 
@@ -41,7 +41,7 @@ const SignupReader = () => {
   const handleVerificationSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://127.0.0.1:8000/api/signup/reader/verify/', { email, verification_code: verificationCode });
+      await axios.post('https://se-project-beta-backend.onrender.com/api/signup/reader/verify/', { email, verification_code: verificationCode });
       setMessage('Your account has been verified and registered as a Reader.');
       // รีไดเร็กต์ไปยังหน้า login หลังการยืนยันสำเร็จ
       navigate('/login');

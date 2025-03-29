@@ -33,7 +33,7 @@ const ReadBook = ({ borrowId }) => {
           return;
         }
 
-        const response = await axios.get(`http://127.0.0.1:8000/api/books/read/${borrowId}/`, {
+        const response = await axios.get(`https://se-project-beta-backend.onrender.com/api/books/read/${borrowId}/`, {
           headers: {
             Authorization: `Token ${token}`,
           },

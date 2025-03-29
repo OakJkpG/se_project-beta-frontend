@@ -18,7 +18,7 @@ const Login = () => {
     setError(null);
     
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/login/', { identifier, password });
+      const response = await axios.post('https://se-project-beta-backend.onrender.com/api/login/', { identifier, password });
       
       // Get token and user info
       const { token, role } = response.data;
@@ -51,7 +51,7 @@ const Login = () => {
     
     try {
       // Send the Google ID token to your backend
-      const response = await axios.post('http://127.0.0.1:8000/api/google-login/', {
+      const response = await axios.post('https://se-project-beta-backend.onrender.com/api/google-login/', {
         token: credentialResponse.credential,
         user_type: 'reader' // Always set as reader
       });

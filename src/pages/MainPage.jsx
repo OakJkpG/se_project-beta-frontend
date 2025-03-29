@@ -30,7 +30,7 @@ const MainPage = () => {
     };
 
     // ดึงข้อมูลหนังสือทั้งหมด
-    axios.get('http://127.0.0.1:8000/api/books/', {
+    axios.get('https://se-project-beta-backend.onrender.com/api/books/', {
       headers: { Authorization: `Token ${token}` },
     })
       .then(response => logResponse('Books', response))
@@ -42,7 +42,7 @@ const MainPage = () => {
       .finally(() => setLoading(false));
 
     // ดึงข้อมูลแท็กทั้งหมดจาก Database
-    axios.get('http://127.0.0.1:8000/api/tags/', {
+    axios.get('https://se-project-beta-backend.onrender.com/api/tags/', {
       headers: { Authorization: `Token ${token}` },
     })
       .then(response => logResponse('Tags', response))
@@ -50,7 +50,7 @@ const MainPage = () => {
       .catch(err => console.error("Error fetching tags:", err));
 
     // ดึงข้อมูลผู้ใช้
-    axios.get('http://127.0.0.1:8000/api/account/reader/', {
+    axios.get('https://se-project-beta-backend.onrender.com/api/account/reader/', {
       headers: { Authorization: `Token ${token}` },
     })
       .then(response => logResponse('User', response))
@@ -64,7 +64,7 @@ const MainPage = () => {
         // Try alternative user info endpoint
         const role = localStorage.getItem('role');
         if (role === 'publisher') {
-          axios.get('http://127.0.0.1:8000/api/account/publisher/', {
+          axios.get('https://se-project-beta-backend.onrender.com/api/account/publisher/', {
             headers: { Authorization: `Token ${token}` },
           })
             .then(response => logResponse('Publisher', response))

@@ -28,7 +28,7 @@ const EditBook = () => {
     const fetchBookData = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/books/${bookId}/`,
+          `https://se-project-beta-backend.onrender.com/api/books/${bookId}/`,
           {
             headers: { Authorization: `Token ${localStorage.getItem('token')}` }
           }
@@ -51,7 +51,7 @@ const EditBook = () => {
 
   const fetchAvailableTags = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/tags/', {
+      const response = await axios.get('https://se-project-beta-backend.onrender.com/api/tags/', {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` }
       });
       setAvailableTags(response.data);
@@ -104,7 +104,7 @@ const EditBook = () => {
       };
 
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/books/update/${bookId}/`,
+        `https://se-project-beta-backend.onrender.com/api/books/update/${bookId}/`,
         updateData,
         {
           headers: {
