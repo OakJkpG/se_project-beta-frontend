@@ -22,7 +22,7 @@ const AccountReader = () => {
 
   const fetchAccountData = () => {
     axios
-      .get('https://se-project-beta-backend.onrender.com/api/account/reader/', {
+      .get('http://127.0.0.1:8000/api/account/reader/', {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       })
       .then(response => {
@@ -70,7 +70,7 @@ const AccountReader = () => {
     try {
         const response = await axios({
             method: 'post',
-            url: `https://se-project-beta-backend.onrender.com/api/books/return/${borrowId}/`,
+            url: `http://127.0.0.1:8000/api/books/return/${borrowId}/`,
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
@@ -173,16 +173,11 @@ const AccountReader = () => {
         <p>Role: {accountData.user.role}</p>
         <p>Registered: {new Date(accountData.user.registered_at).toLocaleDateString()}</p>
         <p>Borrowed Books: {accountData.user.borrow_count}</p>
-        <button
-          className="logout-button"
-          onClick={() => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('role');
-            navigate('/'); // ใช้ useNavigate เพื่อเปลี่ยนเส้นทางไปที่หน้าแรก
-          }}
-        >
-          Logout
-        </button>
+        <button className="logout-button" onClick={() => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('role');
+          navigate('/');
+        }}>Logout</button>
       </div>
       
       <div className="account-right">

@@ -24,7 +24,7 @@ const AccountPublisher = () => {
 
   useEffect(() => {
     axios
-      .get('https://se-project-beta-backend.onrender.com/api/account/publisher/', {
+      .get('http://127.0.0.1:8000/api/account/publisher/', {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       })
       .then(response => setAccountData(response.data))
@@ -36,7 +36,7 @@ const AccountPublisher = () => {
 
   const handleRemoveBook = (bookId) => {
     axios
-      .delete(`https://se-project-beta-backend.onrender.com/api/books/remove/${bookId}/`, {
+      .delete(`http://127.0.0.1:8000/api/books/remove/${bookId}/`, {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       })
       // eslint-disable-next-line no-unused-vars
@@ -99,7 +99,7 @@ const AccountPublisher = () => {
         formData.append('custom_tag', newBook.custom_tag);
       }
 
-      const response = await axios.post('https://se-project-beta-backend.onrender.com/api/books/add/', formData, {
+      const response = await axios.post('http://127.0.0.1:8000/api/books/add/', formData, {
         headers: {
           Authorization: `Token ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data',
@@ -135,7 +135,7 @@ const AccountPublisher = () => {
 
   const fetchAvailableTags = () => {
     axios
-      .get('https://se-project-beta-backend.onrender.com/api/tags/', {
+      .get('http://127.0.0.1:8000/api/tags/', {
         headers: { Authorization: `Token ${localStorage.getItem('token')}` },
       })
       .then(response => {
@@ -201,15 +201,10 @@ const AccountPublisher = () => {
         <p>Role: {accountData.user.role}</p>
         <p>Registered: {new Date(accountData.user.registered_at).toLocaleDateString()}</p>
         <p>Published Books: {accountData.user.book_count}</p>
-        <button
-          onClick={() => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('role');
-            navigate('/'); // ใช้ useNavigate เพื่อเปลี่ยนเส้นทางไปที่หน้าแรก
-          }}
-        >
-          Logout
-        </button>
+        <button onClick={() => {
+          localStorage.removeItem('token');
+          navigate('/');
+        }}>Logout</button>
       </div>
 
       <div className="account-right">

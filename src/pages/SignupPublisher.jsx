@@ -22,7 +22,7 @@ const SignupPublisher = () => {
       return;
     }
     try {
-      await axios.post('https://se-project-beta-backend.onrender.com/api/signup/publisher/', { name, email, password, id_card: idCard });
+      await axios.post('http://127.0.0.1:8000/api/signup/publisher/', { name, email, password, id_card: idCard });
       setMessage('Registration submitted for admin verification. Please wait for confirmation.');
       // รีไดเร็กต์ไปยังหน้า login หลังการสมัครสำเร็จ
       navigate('/login');
